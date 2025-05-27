@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: allocation
+  labels:
+    app: allocation
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: allocation
+  template:
+    metadata:
+      labels:
+        app: allocation
+    spec:
+      containers:
+        - name: order
+          image: quay.io/fraposo/allocation:latest
+          ports:
+            - containerPort: 8080
