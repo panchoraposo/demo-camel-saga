@@ -11,7 +11,7 @@ spec:
     path: operators/odf
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: openshift-storage
+    namespace: storage
   syncPolicy:
     automated:
       selfHeal: true
