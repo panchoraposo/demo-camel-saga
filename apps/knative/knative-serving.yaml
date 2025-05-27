@@ -3,12 +3,3 @@ kind: KnativeServing
 metadata:
   name: knative-serving
   namespace: knative-serving
-spec:
-  ingress:
-    istio:
-      enabled: false
-    kourier:
-      enabled: true
-  deployments:
-    controller:
-      replicas: 1
