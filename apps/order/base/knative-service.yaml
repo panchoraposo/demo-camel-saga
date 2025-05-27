@@ -1,0 +1,18 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: order
+  namespace: order
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/minScale: "0"
+        autoscaling.knative.dev/maxScale: "10"
+      labels:
+        app: order
+    spec:
+      containers:
+        - image: quay.io/fraposo/order:latest
+          ports:
+            - containerPort: 8080
