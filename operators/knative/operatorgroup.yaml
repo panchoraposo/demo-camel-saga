@@ -1,8 +1,8 @@
 apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
 metadata:
-  name: serverless-operatorgroup
-  namespace: openshift-serverless
+  name: knative-serving-operator-group
+  namespace: knative-serving
 spec:
   targetNamespaces:
-    - openshift-serverless
+    - knative-serving
