@@ -4,7 +4,7 @@ metadata:
   name: dual-role
   namespace: kafka
   labels:
-    strimzi.io/cluster: my-cluster
+    strimzi.io/cluster: demo-cluster
 spec:
   replicas: 1
   roles:
