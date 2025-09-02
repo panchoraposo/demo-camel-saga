@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: orders
-  annotations:
+  labels:
     app.openshift.io/runtime: postgresql
 spec:
   replicas: 1

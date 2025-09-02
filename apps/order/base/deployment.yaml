@@ -4,8 +4,7 @@ metadata:
   name: order
   labels:
     app: order
-  annotations:
-    app.openshift.io/runtime: quarkus
+    app.openshift.io/runtime: camel
 spec:
   replicas: 1
   selector:
