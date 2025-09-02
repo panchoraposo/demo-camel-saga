@@ -4,6 +4,7 @@ metadata:
   name: payment
   labels:
     app: payment
+    app.openshift.io/runtime: camel
 spec:
   replicas: 1
   selector:
@@ -16,6 +17,6 @@ spec:
     spec:
       containers:
         - name: order
-          image: quay.io/fraposo/payment:latest
+          image: quay.io/fraposo/payment:0.1
           ports:
             - containerPort: 8080
