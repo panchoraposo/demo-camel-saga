@@ -3,4 +3,4 @@ resources:
   #- configmap.yaml
   - rolebinding.yaml
   #- route.yaml
-  - virtual-service.yaml
+  #- virtual-service.yaml
