@@ -7,4 +7,4 @@ metadata:
     app: frontend
 data:
   REACT_APP_ORDER_API_URL: "https://order-order.apps.cluster-4fg5r.4fg5r.sandbox5322.opentlc.com"
-  REACT_APP_ALLOCATION_API_URL: "http://allocation.allocation.svc.cluster.local:8080"
+  REACT_APP_ALLOCATION_API_URL: "https://allocation-allocation.apps.cluster-4fg5r.4fg5r.sandbox5322.opentlc.com"
