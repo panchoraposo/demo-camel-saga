@@ -24,3 +24,9 @@ spec:
             limits:
               memory: "1Gi"
               cpu: "1"
+          readinessProbe:
+            initialDelaySeconds: 20
+            tcpSocket:
+              port: 8080
+            periodSeconds: 5
+            failureThreshold: 3
