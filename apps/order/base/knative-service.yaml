@@ -11,6 +11,7 @@ spec:
         autoscaling.knative.dev/maxScale: "10"
       labels:
         app: order
+        app.openshift.io/runtime: camel
     spec:
       containers:
         - image: quay.io/fraposo/order:0.1
