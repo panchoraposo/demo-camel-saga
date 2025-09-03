@@ -25,8 +25,10 @@ spec:
               memory: "1Gi"
               cpu: "1"
           readinessProbe:
-            initialDelaySeconds: 20
-            tcpSocket:
+            initialDelaySeconds: 25
+            httpGet:
+              path: "/q/health/ready"
               port: 8080
-            periodSeconds: 5
+            timeoutSeconds: 5
+            periodSeconds: 10
             failureThreshold: 3
