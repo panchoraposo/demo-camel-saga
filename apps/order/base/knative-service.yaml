@@ -13,6 +13,6 @@ spec:
         app: order
     spec:
       containers:
-        - image: quay.io/fraposo/order:1.1-native
+        - image: quay.io/fraposo/order:0.1
           ports:
             - containerPort: 8080
