@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: allocation
+  namespace: allocation
   labels:
     app: allocation
     app.openshift.io/runtime: camel
