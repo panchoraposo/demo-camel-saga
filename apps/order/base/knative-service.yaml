@@ -14,7 +14,7 @@ spec:
         app.openshift.io/runtime: camel
     spec:
       containers:
-        - image: quay.io/fraposo/order:0.5-native
+        - image: quay.io/fraposo/order:0.6-native
           ports:
             - containerPort: 8080
           resources:
