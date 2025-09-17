@@ -28,8 +28,7 @@ spec:
       otlp:
         endpoint: tempo-simplest-gateway.observability.svc.cluster.local:8090
         tls:
-          insecure: false
-          ca_file: "/var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt"
+          insecure: true
         auth:
           authenticator: bearertokenauth
         headers:
