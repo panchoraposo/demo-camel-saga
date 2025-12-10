@@ -6,5 +6,5 @@ metadata:
   labels:
     app: frontend
 data:
-  REACT_APP_ORDER_API_URL: "https://order-order.apps.cluster-qpgs4.qpgs4.sandbox3320.opentlc.com"
-  REACT_APP_ALLOCATION_API_URL: "https://allocation-allocation.apps.cluster-qpgs4.qpgs4.sandbox3320.opentlc.com"
+  REACT_APP_ORDER_API_URL: "https://order-order.apps.cluster-h5dbm.h5dbm.sandbox2287.opentlc.com"
+  REACT_APP_ALLOCATION_API_URL: "https://allocation-allocation.apps.cluster-h5dbm.h5dbm.sandbox2287.opentlc.com"
