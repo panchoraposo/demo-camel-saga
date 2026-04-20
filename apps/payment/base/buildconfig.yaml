@@ -1,0 +1,24 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: payment
+  namespace: payment
+spec:
+  runPolicy: Serial
+  source:
+    type: Git
+    git:
+      uri: https://github.com/panchoraposo/camel-quarkus-saga.git
+      ref: main
+    contextDir: payment
+  strategy:
+    type: Docker
+    dockerStrategy:
+      dockerfilePath: src/main/docker/Dockerfile.openshift
+  output:
+    to:
+      kind: ImageStreamTag
+      name: payment:latest
+  triggers:
+    - type: ConfigChange
+

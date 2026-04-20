@@ -1,0 +1,24 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: allocation
+  namespace: allocation
+spec:
+  runPolicy: Serial
+  source:
+    type: Git
+    git:
+      uri: https://github.com/panchoraposo/camel-quarkus-saga.git
+      ref: main
+    contextDir: allocate
+  strategy:
+    type: Docker
+    dockerStrategy:
+      dockerfilePath: src/main/docker/Dockerfile.openshift
+  output:
+    to:
+      kind: ImageStreamTag
+      name: allocation:latest
+  triggers:
+    - type: ConfigChange
+

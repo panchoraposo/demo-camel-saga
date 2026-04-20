@@ -1,4 +1,6 @@
 resources:
+  - imagestream.yaml
+  - buildconfig.yaml
   - deployment.yaml
   - service.yaml
   - postgresql/deployment.yaml
