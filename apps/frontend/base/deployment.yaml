@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: image-registry.openshift-image-registry.svc:5000/frontend/frontend:latest
+          image: image-registry.openshift-image-registry.svc:5000/frontend/frontend@sha256:52d4359319053e12b40f534f6266778d218b4bd2c67123c34cefb131bb1f6787
           imagePullPolicy: Always
           ports:
             - containerPort: 3000
