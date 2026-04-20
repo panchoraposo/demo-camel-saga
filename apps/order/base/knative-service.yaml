@@ -14,9 +14,13 @@ spec:
         app.openshift.io/runtime: camel
     spec:
       containers:
-        - image: quay.io/fraposo/order:0.7-native
+        - image: image-registry.openshift-image-registry.svc:5000/order/order:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
+          env:
+            - name: QUARKUS_PROFILE
+              value: demo
           resources:
             requests:
               memory: "128Mi"

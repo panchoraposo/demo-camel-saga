@@ -17,8 +17,9 @@ spec:
         app: frontend
     spec:
       containers:
-        - name: order
+        - name: frontend
           image: quay.io/fraposo/saga-frontend:0.2
+          imagePullPolicy: Always
           ports:
             - containerPort: 3000
           envFrom:

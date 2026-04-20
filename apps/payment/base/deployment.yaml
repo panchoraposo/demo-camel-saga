@@ -17,7 +17,11 @@ spec:
         app: payment
     spec:
       containers:
-        - name: order
-          image: quay.io/fraposo/payment:0.1
+        - name: payment
+          image: image-registry.openshift-image-registry.svc:5000/payment/payment:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
+          env:
+            - name: QUARKUS_PROFILE
+              value: demo

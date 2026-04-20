@@ -17,7 +17,11 @@ spec:
         app: allocation
     spec:
       containers:
-        - name: order
-          image: quay.io/fraposo/allocation:0.1
+        - name: allocation
+          image: image-registry.openshift-image-registry.svc:5000/allocation/allocation:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
+          env:
+            - name: QUARKUS_PROFILE
+              value: demo
