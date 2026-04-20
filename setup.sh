@@ -3,6 +3,7 @@ oc apply -f ./argo-apps/knative-operator.yaml
 
 oc apply -f ./argo-apps/kafka-cluster.yaml
 oc apply -f ./argo-apps/knative-serving.yaml
+oc apply -f ./argo-apps/keycloak-operator.yaml
 oc apply -f ./argo-apps/keycloak.yaml
 oc apply -f ./argo-apps/kafka-ui.yaml
 

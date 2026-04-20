@@ -1,22 +1,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: app-keycloak
+  name: keycloak-operator
   namespace: openshift-gitops
 spec:
   project: default
   source:
     repoURL: 'https://github.com/panchoraposo/demo-camel-saga'
     targetRevision: HEAD
-    path: apps/keycloak/overlays/dev
+    path: operators/keycloak
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: keycloak
   syncPolicy:
     automated:
-      prune: true
       selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
-      - SkipDryRunOnMissingResource=true
+      prune: true
 
