@@ -14,13 +14,20 @@ spec:
         app.openshift.io/runtime: camel
     spec:
       containers:
-        - image: image-registry.openshift-image-registry.svc:5000/order/order:latest
+        - name: user-container
+          image: image-registry.openshift-image-registry.svc:5000/order/order:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
           env:
             - name: QUARKUS_PROFILE
               value: demo
+            - name: QUARKUS_OIDC_AUTH_SERVER_URL
+              value: https://keycloak-ingress-keycloak.apps.cluster-rvwsv.rvwsv.sandbox3546.opentlc.com/realms/ticketblaster
+            - name: QUARKUS_OIDC_TOKEN_PRINCIPAL_CLAIM
+              value: preferred_username
+            - name: QUARKUS_OIDC_TLS_VERIFICATION
+              value: none
           resources:
             requests:
               memory: "128Mi"
