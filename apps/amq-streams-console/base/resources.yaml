@@ -1,0 +1,14 @@
+apiVersion: console.streamshub.github.com/v1alpha1
+kind: Console
+metadata:
+  name: ticketblaster-console
+  namespace: kafka
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  hostname: ticketblaster-console-kafka.apps.cluster-rvwsv.rvwsv.sandbox3546.opentlc.com
+  kafkaClusters:
+    - name: demo-cluster
+      namespace: kafka
+      listener: plain
+
