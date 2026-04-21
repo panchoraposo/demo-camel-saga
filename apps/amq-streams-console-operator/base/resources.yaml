@@ -4,8 +4,7 @@ metadata:
   name: amq-streams-console-og
   namespace: kafka-console
 spec:
-  targetNamespaces:
-    - kafka-console
+  {}
 ---
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
