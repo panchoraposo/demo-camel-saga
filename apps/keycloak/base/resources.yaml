@@ -134,6 +134,8 @@ spec:
     users:
       - username: johndoe
         enabled: true
+        firstName: John
+        lastName: Doe
         email: johndoe@example.com
         emailVerified: true
         credentials:
@@ -142,6 +144,8 @@ spec:
             temporary: false
       - username: janedoe
         enabled: true
+        firstName: Jane
+        lastName: Doe
         email: janedoe@example.com
         emailVerified: true
         credentials:
@@ -150,6 +154,8 @@ spec:
             temporary: false
       - username: alice
         enabled: true
+        firstName: Alice
+        lastName: Demo
         email: alice@example.com
         emailVerified: true
         credentials:
@@ -158,6 +164,8 @@ spec:
             temporary: false
       - username: bob
         enabled: true
+        firstName: Bob
+        lastName: Demo
         email: bob@example.com
         emailVerified: true
         credentials:
