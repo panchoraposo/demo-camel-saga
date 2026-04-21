@@ -1,3 +1,31 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: kafka-console
+  name: argocd-manage-streams-console
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+rules:
+  - apiGroups: ["console.streamshub.github.com"]
+    resources: ["consoles", "consoles/status", "consoles/finalizers"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: argocd-manage-streams-console
+  namespace: kafka-console
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+subjects:
+  - kind: ServiceAccount
+    name: openshift-gitops-argocd-application-controller
+    namespace: openshift-gitops
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: argocd-manage-streams-console
+---
 apiVersion: console.streamshub.github.com/v1alpha1
 kind: Console
 metadata:
@@ -7,6 +35,7 @@ metadata:
     - consoles.console.streamshub.github.com/finalizer
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   hostname: ticketblaster-console.apps.cluster-rvwsv.rvwsv.sandbox3546.opentlc.com
   kafkaClusters:
