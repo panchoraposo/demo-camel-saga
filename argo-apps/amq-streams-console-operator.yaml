@@ -11,7 +11,7 @@ spec:
     path: apps/amq-streams-console-operator/overlays/dev
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: kafka
+    namespace: kafka-console
   syncPolicy:
     automated:
       prune: true
