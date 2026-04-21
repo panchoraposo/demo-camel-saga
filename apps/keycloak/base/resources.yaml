@@ -109,13 +109,13 @@ spec:
 apiVersion: k8s.keycloak.org/v2alpha1
 kind: KeycloakRealmImport
 metadata:
-  name: camel-saga-realm
+  name: ticketblaster-realm
 spec:
   keycloakCRName: keycloak
   realm:
-    id: camel-saga
-    realm: camel-saga
-    displayName: Camel Quarkus SAGA Demo
+    id: ticketblaster
+    realm: ticketblaster
+    displayName: TicketBlaster Live
     enabled: true
     registrationAllowed: false
     loginWithEmailAllowed: true
