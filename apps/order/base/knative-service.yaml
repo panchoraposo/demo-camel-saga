@@ -28,6 +28,18 @@ spec:
               value: preferred_username
             - name: QUARKUS_OIDC_TLS_VERIFICATION
               value: none
+            # Admin-only: restrict viewing all orders.
+            # Quarkus resolves roles from Keycloak access tokens at realm_access.roles.
+            - name: QUARKUS_OIDC_ROLES_ROLE_CLAIM_PATH
+              value: realm_access/roles
+            - name: QUARKUS_HTTP_AUTH_POLICY_ADMIN_ROLES_ALLOWED
+              value: admin
+            - name: QUARKUS_HTTP_AUTH_PERMISSION_ADMIN_PATHS
+              value: /orders,/orders/*
+            - name: QUARKUS_HTTP_AUTH_PERMISSION_ADMIN_POLICY
+              value: admin
+            - name: QUARKUS_HTTP_AUTH_PERMISSION_ADMIN_ROLES_ALLOWED
+              value: admin
           resources:
             requests:
               memory: "128Mi"
