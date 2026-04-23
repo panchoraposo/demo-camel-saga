@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - resources.yaml
+
+configMapGenerator:
+  - name: ticketblaster-keycloak-theme
+    files:
+      - theme.properties=../../keycloak/base/theme/ticketblaster/login/theme.properties
+      - login.ftl=../../keycloak/base/theme/ticketblaster/login/login.ftl
+      - styles.css=../../keycloak/base/theme/ticketblaster/login/resources/css/styles.css
+      - logo.svg=../../keycloak/base/theme/ticketblaster/login/resources/img/logo.svg
+
+generatorOptions:
+  disableNameSuffixHash: true
+

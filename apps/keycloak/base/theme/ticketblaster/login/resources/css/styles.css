@@ -1,0 +1,45 @@
+/* TicketBlaster demo theme (minimal). */
+
+:root {
+  --tb-bg1: #0b1220;
+  --tb-bg2: #111a2e;
+  --tb-accent: #ffb703;
+  --tb-text: #e6edf3;
+}
+
+body {
+  background: radial-gradient(1200px 800px at 20% 10%, rgba(255, 183, 3, 0.12), transparent 60%),
+    radial-gradient(900px 700px at 90% 30%, rgba(56, 189, 248, 0.10), transparent 60%),
+    linear-gradient(180deg, var(--tb-bg1), var(--tb-bg2));
+}
+
+/* Keycloak still uses these IDs across modern versions. */
+#kc-header-wrapper {
+  letter-spacing: 0.02em;
+}
+
+#kc-page-title {
+  color: var(--tb-text);
+}
+
+/* Make the card pop a bit. */
+.card-pf,
+.pf-v5-c-login__main {
+  backdrop-filter: blur(6px);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+/* Accent primary actions. */
+button[type='submit'],
+.pf-v5-c-button.pf-m-primary {
+  background-color: var(--tb-accent) !important;
+  border-color: var(--tb-accent) !important;
+  color: #1b1b1b !important;
+}
+
+button[type='submit']:hover,
+.pf-v5-c-button.pf-m-primary:hover {
+  filter: brightness(0.95);
+}
+

@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: keycloak-ha-site-b
+  namespace: openshift-gitops
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/panchoraposo/demo-camel-saga'
+    targetRevision: HEAD
+    path: apps/keycloak-ha/site-b
+  destination:
+    # For a real multi-cluster setup, set this to the Site-B cluster API/server registered in ArgoCD.
+    server: 'https://kubernetes.default.svc'
+    namespace: keycloak
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+

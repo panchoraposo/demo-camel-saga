@@ -1,0 +1,194 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: connect-secret
+  namespace: keycloak
+type: Opaque
+stringData:
+  identities.yaml: |
+    credentials:
+      - username: developer
+        password: demo
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: remote-store-secret
+  namespace: keycloak
+type: Opaque
+stringData:
+  username: developer
+  password: demo
+---
+# NOTE: This is a blueprint-style manifest intended for multi-cluster testing.
+# You must provide the cross-site TLS keystore/truststore + token secrets described in the HA guide.
+apiVersion: infinispan.org/v1
+kind: Infinispan
+metadata:
+  name: infinispan
+  namespace: keycloak
+  annotations:
+    infinispan.org/monitoring: 'true'
+spec:
+  replicas: 3
+  jmx:
+    enabled: true
+  security:
+    endpointSecretName: connect-secret
+  service:
+    type: DataGrid
+    sites:
+      local:
+        name: site-a
+        expose:
+          type: Route
+        maxRelayNodes: 128
+        encryption:
+          transportKeyStore:
+            secretName: xsite-keystore-secret
+            alias: xsite
+            filename: keystore.p12
+          routerKeyStore:
+            secretName: xsite-keystore-secret
+            alias: xsite
+            filename: keystore.p12
+          trustStore:
+            secretName: xsite-truststore-secret
+            filename: truststore.p12
+      locations:
+        - name: site-b
+          clusterName: infinispan
+          namespace: keycloak
+          # Replace with the OpenShift API URL of Site B (example from guide: openshift://api.site-b)
+          url: openshift://api.site-b
+          # Token secret used by Data Grid Operator to configure the remote site connection
+          secretName: xsite-token-secret
+---
+apiVersion: infinispan.org/v2alpha1
+kind: Cache
+metadata:
+  name: actiontokens
+  namespace: keycloak
+spec:
+  clusterName: infinispan
+  name: actionTokens
+  template: |-
+    distributedCache:
+      mode: "SYNC"
+      owners: "2"
+      statistics: "true"
+      remoteTimeout: "5000"
+      encoding:
+        media-type: "application/x-protostream"
+      locking:
+        acquireTimeout: "4000"
+      transaction:
+        mode: "NON_DURABLE_XA"
+        locking: "PESSIMISTIC"
+      stateTransfer:
+        chunkSize: "16"
+      backups:
+        site-b:
+          backup:
+            strategy: "SYNC"
+            timeout: "4500"
+            failurePolicy: "FAIL"
+            stateTransfer:
+              chunkSize: "16"
+---
+apiVersion: infinispan.org/v2alpha1
+kind: Cache
+metadata:
+  name: authenticationsessions
+  namespace: keycloak
+spec:
+  clusterName: infinispan
+  name: authenticationSessions
+  template: |-
+    distributedCache:
+      mode: "SYNC"
+      owners: "2"
+      statistics: "true"
+      remoteTimeout: "5000"
+      encoding:
+        media-type: "application/x-protostream"
+      locking:
+        acquireTimeout: "4000"
+      transaction:
+        mode: "NON_DURABLE_XA"
+        locking: "PESSIMISTIC"
+      stateTransfer:
+        chunkSize: "16"
+      backups:
+        site-b:
+          backup:
+            strategy: "SYNC"
+            timeout: "4500"
+            failurePolicy: "FAIL"
+            stateTransfer:
+              chunkSize: "16"
+---
+apiVersion: infinispan.org/v2alpha1
+kind: Cache
+metadata:
+  name: loginfailures
+  namespace: keycloak
+spec:
+  clusterName: infinispan
+  name: loginFailures
+  template: |-
+    distributedCache:
+      mode: "SYNC"
+      owners: "2"
+      statistics: "true"
+      remoteTimeout: "5000"
+      encoding:
+        media-type: "application/x-protostream"
+      locking:
+        acquireTimeout: "4000"
+      transaction:
+        mode: "NON_DURABLE_XA"
+        locking: "PESSIMISTIC"
+      stateTransfer:
+        chunkSize: "16"
+      backups:
+        site-b:
+          backup:
+            strategy: "SYNC"
+            timeout: "4500"
+            failurePolicy: "FAIL"
+            stateTransfer:
+              chunkSize: "16"
+---
+apiVersion: infinispan.org/v2alpha1
+kind: Cache
+metadata:
+  name: work
+  namespace: keycloak
+spec:
+  clusterName: infinispan
+  name: work
+  template: |-
+    distributedCache:
+      mode: "SYNC"
+      owners: "2"
+      statistics: "true"
+      remoteTimeout: "5000"
+      encoding:
+        media-type: "application/x-protostream"
+      locking:
+        acquireTimeout: "4000"
+      transaction:
+        mode: "NON_DURABLE_XA"
+        locking: "PESSIMISTIC"
+      stateTransfer:
+        chunkSize: "16"
+      backups:
+        site-b:
+          backup:
+            strategy: "SYNC"
+            timeout: "4500"
+            failurePolicy: "FAIL"
+            stateTransfer:
+              chunkSize: "16"
+
