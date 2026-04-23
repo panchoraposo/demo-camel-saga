@@ -13,9 +13,23 @@ body {
     linear-gradient(180deg, var(--tb-bg1), var(--tb-bg2));
 }
 
-/* Keycloak still uses these IDs across modern versions. */
+/* Remove the outer brand header (right-side "TicketBlaster Live"). */
+#kc-header,
 #kc-header-wrapper {
-  letter-spacing: 0.02em;
+  display: none !important;
+}
+
+/* Center the login card (single column). */
+.pf-v5-c-login__container {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.pf-v5-c-login__main {
+  width: min(560px, 92vw);
 }
 
 #kc-page-title {
