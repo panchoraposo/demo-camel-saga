@@ -4,3 +4,14 @@ kind: Kustomization
 resources:
   - resources.yaml
 
+configMapGenerator:
+  - name: ticketblaster-keycloak-theme
+    files:
+      - theme.properties=theme/ticketblaster/login/theme.properties
+      - login.ftl=theme/ticketblaster/login/login.ftl
+      - styles.css=theme/ticketblaster/login/resources/css/styles.css
+      - logo.svg=theme/ticketblaster/login/resources/img/logo.svg
+
+generatorOptions:
+  disableNameSuffixHash: true
+

@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: keycloak-db-secret
+  namespace: keycloak
 type: Opaque
 stringData:
   username: keycloak
@@ -11,79 +12,37 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: keycloak-admin-secret
+  namespace: keycloak
 type: Opaque
 stringData:
   username: admin
   password: admin
 ---
 apiVersion: v1
-kind: PersistentVolumeClaim
+kind: Secret
 metadata:
-  name: keycloak-postgres
-spec:
-  accessModes: ["ReadWriteOnce"]
-  resources:
-    requests:
-      storage: 2Gi
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: keycloak-postgres
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: keycloak-postgres
-  template:
-    metadata:
-      labels:
-        app: keycloak-postgres
-    spec:
-      containers:
-        - name: postgres
-          image: registry.redhat.io/rhel9/postgresql-15:latest
-          ports:
-            - containerPort: 5432
-          env:
-            - name: POSTGRESQL_USER
-              valueFrom:
-                secretKeyRef:
-                  name: keycloak-db-secret
-                  key: username
-            - name: POSTGRESQL_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: keycloak-db-secret
-                  key: password
-            - name: POSTGRESQL_DATABASE
-              value: keycloak
-          volumeMounts:
-            - name: data
-              mountPath: /var/lib/pgsql/data
-      volumes:
-        - name: data
-          persistentVolumeClaim:
-            claimName: keycloak-postgres
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: keycloak-postgres
-spec:
-  selector:
-    app: keycloak-postgres
-  ports:
-    - name: postgres
-      port: 5432
-      targetPort: 5432
+  name: remote-store-secret
+  namespace: keycloak
+type: Opaque
+stringData:
+  username: developer
+  password: demo
 ---
 apiVersion: k8s.keycloak.org/v2alpha1
 kind: Keycloak
 metadata:
+  labels:
+    app: keycloak
   name: keycloak
+  namespace: keycloak
 spec:
-  instances: 1
+  hostname:
+    # Point this at your multi-site entrypoint (Global Accelerator / external LB / custom domain)
+    hostname: <KEYCLOAK_URL_HERE>
+  instances: 3
+  features:
+    enabled:
+      - multi-site
   unsupported:
     podTemplate:
       spec:
@@ -107,30 +66,56 @@ spec:
                 mountPath: /opt/keycloak/themes/ticketblaster
   db:
     vendor: postgres
-    host: keycloak-postgres
-    database: keycloak
+    # Replace with your synchronously replicated DB writer endpoint
+    url: jdbc:aws-wrapper:postgresql://<AWS_AURORA_URL_HERE>:5432/keycloak
+    poolMinSize: 30
+    poolInitialSize: 30
+    poolMaxSize: 30
     usernameSecret:
       name: keycloak-db-secret
       key: username
     passwordSecret:
       name: keycloak-db-secret
       key: password
-  http:
-    httpEnabled: true
-  ingress:
-    className: openshift-default
   proxy:
     headers: xforwarded
-  hostname:
-    strict: false
+  http:
+    tlsSecret: keycloak-tls-secret
+  ingress:
+    enabled: true
   bootstrapAdmin:
     user:
       secret: keycloak-admin-secret
+  additionalOptions:
+    - name: log-console-output
+      value: json
+    - name: metrics-enabled
+      value: 'true'
+    - name: event-metrics-user-enabled
+      value: 'true'
+    - name: cache-remote-host
+      value: "infinispan.keycloak.svc"
+    - name: cache-remote-port
+      value: "11222"
+    - name: cache-remote-username
+      secret:
+        name: remote-store-secret
+        key: username
+    - name: cache-remote-password
+      secret:
+        name: remote-store-secret
+        key: password
+    # Ensure caches exist on both sites (see HA guide)
+    - name: cache-remote-backup-sites
+      value: "site-b"
+    - name: db-driver
+      value: software.amazon.jdbc.Driver
 ---
 apiVersion: k8s.keycloak.org/v2alpha1
 kind: KeycloakRealmImport
 metadata:
   name: ticketblaster-realm
+  namespace: keycloak
 spec:
   keycloakCRName: keycloak
   realm:
@@ -173,26 +158,6 @@ spec:
         firstName: Jane
         lastName: Doe
         email: janedoe@example.com
-        emailVerified: true
-        credentials:
-          - type: password
-            value: demo
-            temporary: false
-      - username: alice
-        enabled: true
-        firstName: Alice
-        lastName: Demo
-        email: alice@example.com
-        emailVerified: true
-        credentials:
-          - type: password
-            value: demo
-            temporary: false
-      - username: bob
-        enabled: true
-        firstName: Bob
-        lastName: Demo
-        email: bob@example.com
         emailVerified: true
         credentials:
           - type: password
