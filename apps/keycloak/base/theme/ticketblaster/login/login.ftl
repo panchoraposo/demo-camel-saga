@@ -7,9 +7,8 @@
 <!-- template: login.ftl (ticketblaster theme override) -->
 
     <#if section = "header">
-        <div style="display:flex; align-items:center; gap:12px;">
-            <img src="${url.resourcesPath}/img/logo.svg" alt="TicketBlaster" style="height:44px; width:auto;" />
-            <span style="font-weight:800; letter-spacing:0.02em;">TicketBlaster Live</span>
+        <div class="tb-login-brand">
+            <img src="${url.resourcesPath}/img/logo.svg" alt="TicketBlaster" class="tb-login-logo" />
         </div>
     <#elseif section = "form">
         <div id="kc-form">

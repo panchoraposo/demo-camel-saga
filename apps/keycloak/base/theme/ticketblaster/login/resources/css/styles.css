@@ -49,6 +49,19 @@ header#kc-header,
   color: var(--tb-text);
 }
 
+/* Center brand/logo inside the H1 title area. */
+.tb-login-brand {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0 2px;
+}
+
+.tb-login-logo {
+  height: 56px;
+  width: auto;
+}
+
 /* Make the card pop a bit. */
 .card-pf,
 .pf-v5-c-login__main {
