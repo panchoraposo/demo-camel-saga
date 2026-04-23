@@ -33,16 +33,25 @@ header#kc-header,
 }
 
 /* Center the login card (single column). */
+.pf-v5-c-login {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px 12px;
+}
+
 .pf-v5-c-login__container {
   display: flex !important;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  width: min(560px, 92vw);
+  margin: 0 auto;
 }
 
 .pf-v5-c-login__main {
-  width: min(560px, 92vw);
+  width: 100%;
 }
 
 #kc-page-title {
