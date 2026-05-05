@@ -25,3 +25,5 @@ spec:
           env:
             - name: QUARKUS_PROFILE
               value: demo
+            - name: CAMEL_COMPONENT_KAFKA_BROKERS
+              value: demo-cluster-kafka-bootstrap.kafka.svc:9092
