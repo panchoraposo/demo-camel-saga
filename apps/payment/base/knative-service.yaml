@@ -31,8 +31,7 @@ spec:
               cpu: "500m"
           readinessProbe:
             initialDelaySeconds: 10
-            httpGet:
-              path: "/q/health/ready"
+            tcpSocket:
               port: 8080
             timeoutSeconds: 5
             periodSeconds: 10
