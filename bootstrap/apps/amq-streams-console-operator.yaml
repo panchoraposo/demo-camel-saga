@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-amq-streams-console-operator
+  namespace: openshift-gitops
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/panchoraposo/demo-camel-saga'
+    targetRevision: HEAD
+    path: apps/amq-streams-console-operator/overlays/dev
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: kafka-console
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

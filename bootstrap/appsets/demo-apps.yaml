@@ -1,0 +1,44 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: ticketblaster-demo-apps
+  namespace: openshift-gitops
+  annotations:
+    argocd.argoproj.io/sync-wave: "50"
+spec:
+  generators:
+    - list:
+        elements:
+          - name: app-order
+            path: apps/order/overlays/dev
+            namespace: order
+          - name: app-payment
+            path: apps/payment/overlays/dev
+            namespace: payment
+          - name: app-allocation
+            path: apps/allocation/overlays/dev
+            namespace: allocation
+          - name: frontend
+            path: apps/frontend/overlays/dev
+            namespace: frontend
+  template:
+    metadata:
+      name: '{{name}}'
+      namespace: openshift-gitops
+      annotations:
+        argocd.argoproj.io/sync-wave: "50"
+    spec:
+      project: default
+      source:
+        repoURL: 'https://github.com/panchoraposo/demo-camel-saga'
+        targetRevision: HEAD
+        path: '{{path}}'
+      destination:
+        server: 'https://kubernetes.default.svc'
+        namespace: '{{namespace}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

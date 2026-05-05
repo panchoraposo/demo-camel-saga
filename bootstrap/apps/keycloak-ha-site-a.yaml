@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: keycloak-ha-site-a
+  namespace: openshift-gitops
+  annotations:
+    argocd.argoproj.io/sync-wave: "90"
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/panchoraposo/demo-camel-saga'
+    targetRevision: HEAD
+    path: apps/keycloak-ha/site-a
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: keycloak
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - SkipDryRunOnMissingResource=true

@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: storagesystem
+  namespace: openshift-gitops
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/panchoraposo/demo-camel-saga'
+    targetRevision: HEAD
+    path: apps/odf/storage-system
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: openshift-storage
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
+      - SkipDryRunOnMissingResource=true
