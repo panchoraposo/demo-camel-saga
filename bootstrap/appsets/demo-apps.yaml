@@ -30,7 +30,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: 'https://github.com/panchoraposo/demo-camel-saga'
+        repoURL: 'https://github.com/panchoraposo/camel-quarkus-saga-gitops'
         targetRevision: HEAD
         path: '{{path}}'
       destination:
