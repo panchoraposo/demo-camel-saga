@@ -11,6 +11,10 @@ spec:
         - name: mc
           image: quay.io/minio/mc:latest
           env:
+            - name: HOME
+              value: /tmp
+            - name: MC_CONFIG_DIR
+              value: /tmp/.mc
             - name: MINIO_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
@@ -26,6 +30,7 @@ spec:
             - -ec
             - |
               echo "Waiting for MinIO..."
+              mkdir -p "$MC_CONFIG_DIR"
               until mc alias set local http://minio.observability.svc.cluster.local:9000 "$MINIO_ACCESS_KEY" "$MINIO_SECRET_KEY"; do
                 sleep 2
               done

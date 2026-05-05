@@ -4,6 +4,7 @@ metadata:
   name: simplest
   namespace: observability
 spec:
+  managementState: Managed
   replicationFactor: 1
   retention:
     global:
