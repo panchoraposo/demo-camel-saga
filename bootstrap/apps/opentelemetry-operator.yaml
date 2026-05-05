@@ -13,7 +13,7 @@ spec:
     path: operators/opentelemetry
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: observability
+    namespace: openshift-opentelemetry-operator
   syncPolicy:
     automated:
       selfHeal: true
