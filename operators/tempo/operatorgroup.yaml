@@ -2,7 +2,6 @@ apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
 metadata:
   name: tempo-operatorgroup
-  namespace: observability
+  namespace: openshift-tempo-operator
 spec:
-  targetNamespaces:
-    - observability
+  # Install cluster-wide (required by the Red Hat Tempo operator).
