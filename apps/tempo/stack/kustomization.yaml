@@ -1,4 +1,5 @@
 resources:
+  - rbac.yaml
   - minio-secret.yaml
   - minio-deployment.yaml
   - minio-service.yaml
