@@ -53,6 +53,8 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
     argocd.argoproj.io/sync-options: Prune=false
+    # Let OpenShift/GitOps own extra metadata (SCC, PSA labels, etc.)
+    argocd.argoproj.io/compare-options: IgnoreExtraneous
 ---
 apiVersion: v1
 kind: Namespace
@@ -61,6 +63,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
     argocd.argoproj.io/sync-options: Prune=false
+    argocd.argoproj.io/compare-options: IgnoreExtraneous
 ---
 apiVersion: v1
 kind: Namespace
