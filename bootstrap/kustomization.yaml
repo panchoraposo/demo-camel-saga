@@ -10,23 +10,14 @@ resources:
   - apps/keycloak-operator.yaml
   - apps/datagrid-operator.yaml
   - apps/knative-operator.yaml
-  - apps/opentelemetry-operator.yaml
-  - apps/odf-operator.yaml
   - apps/amq-streams-console-operator.yaml
 
   # Wave 10+: platform instances
   - apps/demo-cluster.yaml
   - apps/app-keycloak.yaml
   - apps/knative-serving.yaml
-  - apps/storagesystem.yaml
   - apps/app-amq-streams-console.yaml
   - apps/app-kafka-ui.yaml
-
-  # Optional HA demos (kept late to not block core demo)
-  - apps/keycloak-ha-site-a.yaml
-  - apps/keycloak-ha-site-b.yaml
-  - apps/datagrid-ha-site-a.yaml
-  - apps/datagrid-ha-site-b.yaml
 
   # Wave 50+: demo microservices (generated)
   - appsets/demo-apps.yaml
