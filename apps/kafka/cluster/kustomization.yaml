@@ -1,3 +1,4 @@
 resources:
   - kafka.yaml
+  - topics.yaml
   - rolebinding.yaml

@@ -1,0 +1,43 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: order-events
+  namespace: kafka
+  labels:
+    strimzi.io/cluster: demo-cluster
+spec:
+  partitions: 3
+  replicas: 1
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: seat-events
+  namespace: kafka
+  labels:
+    strimzi.io/cluster: demo-cluster
+spec:
+  partitions: 3
+  replicas: 1
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: payment-events
+  namespace: kafka
+  labels:
+    strimzi.io/cluster: demo-cluster
+spec:
+  partitions: 3
+  replicas: 1
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: compensation-events
+  namespace: kafka
+  labels:
+    strimzi.io/cluster: demo-cluster
+spec:
+  partitions: 3
+  replicas: 1
