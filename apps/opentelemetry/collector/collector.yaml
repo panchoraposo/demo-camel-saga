@@ -5,10 +5,6 @@ metadata:
   namespace: observability
 spec:
   config:
-    extensions:
-      bearertokenauth:
-        filename: "/var/run/secrets/kubernetes.io/serviceaccount/token"
-
     receivers:
       otlp:
         protocols:
@@ -26,16 +22,11 @@ spec:
     exporters:
       debug: {}
       otlp:
-        endpoint: tempo-simplest-gateway.observability.svc.cluster.local:8090
+        endpoint: tempo-simplest-distributor.observability.svc.cluster.local:4317
         tls:
           insecure: true
-        auth:
-          authenticator: bearertokenauth
-        headers:
-          X-Scope-OrgID: "dev"
 
     service:
-      extensions: [bearertokenauth]
       pipelines:
         traces:
           receivers: [otlp, jaeger]

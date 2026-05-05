@@ -5,7 +5,7 @@ metadata:
   namespace: observability
 spec:
   channel: stable
-  name: opentelemetry-operator
+  name: opentelemetry-product
   source: redhat-operators
   sourceNamespace: openshift-marketplace
   installPlanApproval: Automatic

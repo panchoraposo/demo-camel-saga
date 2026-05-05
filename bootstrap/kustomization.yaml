@@ -11,6 +11,8 @@ resources:
   - apps/datagrid-operator.yaml
   - apps/knative-operator.yaml
   - apps/amq-streams-console-operator.yaml
+  - apps/opentelemetry-operator.yaml
+  - apps/tempo-operator.yaml
 
   # Wave 10+: platform instances
   - apps/demo-cluster.yaml
@@ -18,6 +20,8 @@ resources:
   - apps/knative-serving.yaml
   - apps/app-amq-streams-console.yaml
   - apps/app-kafka-ui.yaml
+  - apps/tempo-stack.yaml
+  - apps/opentelemetry-collector.yaml
 
   # Wave 50+: demo microservices (generated)
   - appsets/demo-apps.yaml

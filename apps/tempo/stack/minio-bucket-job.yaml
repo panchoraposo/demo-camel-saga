@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: minio-create-tempo-bucket
+  namespace: observability
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: mc
+          image: quay.io/minio/mc:latest
+          env:
+            - name: MINIO_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: tempo-s3
+                  key: access_key_id
+            - name: MINIO_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: tempo-s3
+                  key: access_key_secret
+          command:
+            - /bin/sh
+            - -ec
+            - |
+              echo "Waiting for MinIO..."
+              until mc alias set local http://minio.observability.svc.cluster.local:9000 "$MINIO_ACCESS_KEY" "$MINIO_SECRET_KEY"; do
+                sleep 2
+              done
+              mc mb --ignore-existing local/tempo

@@ -1,0 +1,31 @@
+apiVersion: tempo.grafana.com/v1alpha1
+kind: TempoStack
+metadata:
+  name: simplest
+  namespace: observability
+spec:
+  replicationFactor: 1
+  retention:
+    global:
+      traces: 24h
+  storage:
+    secret:
+      name: tempo-s3
+      type: s3
+  storageSize: 1Gi
+  resources:
+    total:
+      limits:
+        cpu: "1000m"
+        memory: "2Gi"
+  template:
+    queryFrontend:
+      jaegerQuery:
+        enabled: true
+        ingress:
+          type: route
+          route:
+            termination: edge
+  observability:
+    metrics:
+      createServiceMonitors: true
