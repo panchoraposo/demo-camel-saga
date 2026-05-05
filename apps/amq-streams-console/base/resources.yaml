@@ -37,7 +37,7 @@ metadata:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
     argocd.argoproj.io/sync-wave: "1"
 spec:
-  hostname: ticketblaster-console.apps.cluster-rvwsv.rvwsv.sandbox3546.opentlc.com
+  hostname: ticketblaster-console.apps.cluster-98dhw.98dhw.sandbox2317.opentlc.com
   kafkaClusters:
     - name: demo-cluster
       namespace: kafka

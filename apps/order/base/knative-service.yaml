@@ -25,7 +25,7 @@ spec:
             - name: CAMEL_COMPONENT_KAFKA_BROKERS
               value: demo-cluster-kafka-bootstrap.kafka.svc:9092
             - name: QUARKUS_OIDC_AUTH_SERVER_URL
-              value: https://keycloak-ingress-keycloak.apps.cluster-rvwsv.rvwsv.sandbox3546.opentlc.com/realms/ticketblaster
+              value: http://keycloak-service.keycloak.svc.cluster.local:8080/realms/ticketblaster
             - name: QUARKUS_OIDC_TOKEN_PRINCIPAL_CLAIM
               value: preferred_username
             - name: QUARKUS_OIDC_TLS_VERIFICATION
