@@ -4,7 +4,7 @@ metadata:
   name: datagrid-operator
   namespace: keycloak
 spec:
-  channel: 8.5.x
+  channel: stable
   installPlanApproval: Automatic
   name: datagrid
   source: redhat-operators
