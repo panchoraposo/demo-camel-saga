@@ -1,0 +1,39 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: allocation
+  namespace: allocation
+spec:
+  template:
+    metadata:
+      annotations:
+        # Kafka consumer must not scale-to-zero.
+        autoscaling.knative.dev/minScale: "1"
+        autoscaling.knative.dev/maxScale: "10"
+    spec:
+      containers:
+        - name: allocation
+          image: image-registry.openshift-image-registry.svc:5000/allocation/allocation:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: QUARKUS_PROFILE
+              value: demo
+            - name: CAMEL_COMPONENT_KAFKA_BROKERS
+              value: demo-cluster-kafka-bootstrap.kafka.svc:9092
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          readinessProbe:
+            initialDelaySeconds: 10
+            httpGet:
+              path: "/q/health/ready"
+              port: 8080
+            timeoutSeconds: 5
+            periodSeconds: 10
+            failureThreshold: 3

@@ -2,4 +2,4 @@ resources:
   - ../../base
   - rolebinding.yaml
   - configmap.yaml
-  - route.yaml
+  # Frontend is exposed via Knative Route (avoid host conflicts).
