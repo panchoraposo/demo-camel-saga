@@ -7,6 +7,11 @@ metadata:
     argocd.argoproj.io/sync-wave: "20"
 spec:
   project: default
+  ignoreDifferences:
+    - group: tempo.grafana.com
+      kind: TempoStack
+      jsonPointers:
+        - /spec
   source:
     repoURL: 'https://github.com/panchoraposo/camel-quarkus-saga-gitops'
     targetRevision: HEAD
