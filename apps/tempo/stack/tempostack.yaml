@@ -8,6 +8,10 @@ metadata:
 spec:
   managementState: Managed
   replicationFactor: 1
+  # Sandbox clusters are often single-node and NetworkPolicies can block ingestion
+  # (e.g. collector -> distributor). Disable to keep the demo reliable.
+  networkPolicy:
+    enabled: false
   tenants:
     mode: openshift
     authentication:
