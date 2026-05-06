@@ -35,10 +35,8 @@ spec:
           termination: edge
       rbac:
         enabled: true
-    queryFrontend:
-      jaegerQuery:
-        enabled: true
-        # When the gateway is enabled, Jaeger UI must be accessed via the gateway ingress.
+    # Traces are surfaced via the OpenShift Console plugin; when gateway + multitenancy
+    # are enabled, we avoid exposing Jaeger Query directly.
   observability:
     metrics:
       createServiceMonitors: true
