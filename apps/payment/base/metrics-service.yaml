@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: payment-metrics
+  namespace: payment
+  labels:
+    app: payment
+    ticketblaster.redhat.demo/component: metrics
+spec:
+  selector:
+    serving.knative.dev/service: payment
+  ports:
+    - name: metrics
+      port: 8080
+      targetPort: 8080

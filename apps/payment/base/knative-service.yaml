@@ -23,6 +23,18 @@ spec:
               value: demo
             - name: CAMEL_COMPONENT_KAFKA_BROKERS
               value: demo-cluster-kafka-bootstrap.kafka.svc:9092
+            - name: QUARKUS_OTEL_SDK_DISABLED
+              value: "false"
+            - name: QUARKUS_OTEL_EXPORTER_OTLP_ENDPOINT
+              value: http://dev-collector.observability.svc.cluster.local:4317
+            - name: QUARKUS_OTEL_SERVICE_NAME
+              value: payment
+            - name: QUARKUS_OTEL_RESOURCE_ATTRIBUTES
+              value: deployment.environment=demo
+            - name: QUARKUS_OTEL_TRACES_SAMPLER
+              value: parentbased_traceidratio
+            - name: QUARKUS_OTEL_TRACES_SAMPLER_ARG
+              value: "1.0"
           resources:
             requests:
               memory: "256Mi"
@@ -32,7 +44,8 @@ spec:
               cpu: "500m"
           readinessProbe:
             initialDelaySeconds: 10
-            tcpSocket:
+            httpGet:
+              path: "/q/health/ready"
               port: 8080
             timeoutSeconds: 5
             periodSeconds: 10

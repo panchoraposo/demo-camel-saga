@@ -4,5 +4,7 @@ resources:
   #- deployment.yaml
   #- service.yaml
   - knative-service.yaml
+  - metrics-service.yaml
+  - servicemonitor.yaml
   - postgresql/deployment.yaml
   - postgresql/service.yaml
