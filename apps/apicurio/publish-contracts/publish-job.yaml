@@ -35,13 +35,31 @@ spec:
                 TYPE="$2"
                 FILE="$3"
 
-                # PUT is create-or-replace and preserves a stable artifactId.
+                # Create with explicit artifactId. If it already exists, update it.
+                CODE="$(curl -sS -o /tmp/publish-resp.json -w '%{http_code}' -X POST \
+                  -H "X-Registry-ArtifactType: $TYPE" \
+                  -H "X-Registry-ArtifactId: $ARTIFACT_ID" \
+                  -H "Content-Type: application/json" \
+                  "$REGISTRY_BASE_URL/groups/$GROUP_ID/artifacts" \
+                  --data-binary "@$FILE" || true)"
+
+                if [ "$CODE" = "200" ] || [ "$CODE" = "201" ]; then
+                  echo "Created $ARTIFACT_ID ($TYPE)"
+                  return 0
+                fi
+
+                if [ "$CODE" != "409" ]; then
+                  echo "Failed creating $ARTIFACT_ID ($TYPE): HTTP $CODE"
+                  cat /tmp/publish-resp.json || true
+                  return 1
+                fi
+
                 curl -fsS -o /dev/null -X PUT \
                   -H "X-Registry-ArtifactType: $TYPE" \
                   -H "Content-Type: application/json" \
                   "$REGISTRY_BASE_URL/groups/$GROUP_ID/artifacts/$ARTIFACT_ID" \
                   --data-binary "@$FILE"
-                echo "Published $ARTIFACT_ID ($TYPE)"
+                echo "Updated $ARTIFACT_ID ($TYPE)"
               }
 
               echo "Publishing Avro schemas..."
