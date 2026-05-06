@@ -1,0 +1,13 @@
+apiVersion: objectbucket.io/v1alpha1
+kind: ObjectBucketClaim
+metadata:
+  name: tempo-traces
+  namespace: observability
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  generateBucketName: tempo-traces
+  storageClassName: openshift-storage.noobaa.io
+  additionalConfig:
+    bucketclass: tempo-bucket-class
+

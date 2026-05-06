@@ -4,4 +4,6 @@ resources:
   - minio-deployment.yaml
   - minio-service.yaml
   - minio-bucket-job.yaml
+  - tempo-odf-obc.yaml
+  - tempo-odf-s3-secret-job.yaml
   - tempostack.yaml

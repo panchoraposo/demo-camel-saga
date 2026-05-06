@@ -3,6 +3,8 @@ kind: TempoStack
 metadata:
   name: simplest
   namespace: observability
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   managementState: Managed
   replicationFactor: 1
@@ -11,7 +13,7 @@ spec:
       traces: 24h
   storage:
     secret:
-      name: tempo-s3
+      name: tempo-s3-odf
       type: s3
   storageSize: 1Gi
   resources:
