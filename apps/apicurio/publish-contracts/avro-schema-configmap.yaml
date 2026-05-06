@@ -4,7 +4,7 @@ metadata:
   name: ticketblaster-avro-schemas
   namespace: apicurio-registry
   annotations:
-    ticketblaster.redhat.demo/contracts-revision: "2f35dfb"
+    ticketblaster.redhat.demo/contracts-revision: "d22e158"
 data:
   order-event.avsc: |
     {
