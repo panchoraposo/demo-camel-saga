@@ -3,5 +3,4 @@ kind: Kustomization
 
 resources:
   - rbac-cluster.yaml
-  - uiplugin-logging.yaml
   - uiplugin-distributed-tracing.yaml

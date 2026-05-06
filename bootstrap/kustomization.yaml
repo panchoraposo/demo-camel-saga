@@ -13,8 +13,6 @@ resources:
   - apps/amq-streams-console-operator.yaml
   - apps/opentelemetry-operator.yaml
   - apps/tempo-operator.yaml
-  - apps/logging-operator.yaml
-  - apps/loki-operator.yaml
   - apps/cluster-observability-operator.yaml
   - apps/service-registry-operator.yaml
   - apps/odf-operator.yaml
@@ -29,7 +27,6 @@ resources:
   - apps/odf-mcg.yaml
   - apps/tempo-stack.yaml
   - apps/opentelemetry-collector.yaml
-  - apps/logging-stack.yaml
   - apps/apicurio-registry.yaml
   - apps/devspaces.yaml
   - apps/observability-ui-plugins.yaml

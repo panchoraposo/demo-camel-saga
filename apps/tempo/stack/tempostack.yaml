@@ -8,6 +8,11 @@ metadata:
 spec:
   managementState: Managed
   replicationFactor: 1
+  tenants:
+    mode: openshift
+    authentication:
+      - tenantName: demo
+        tenantId: demo
   retention:
     global:
       traces: 24h
@@ -22,6 +27,14 @@ spec:
         cpu: "1000m"
         memory: "2Gi"
   template:
+    gateway:
+      enabled: true
+      ingress:
+        type: route
+        route:
+          termination: edge
+      rbac:
+        enabled: true
     queryFrontend:
       jaegerQuery:
         enabled: true
