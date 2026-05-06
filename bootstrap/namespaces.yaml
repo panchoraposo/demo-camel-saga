@@ -138,3 +138,13 @@ metadata:
     argocd.argoproj.io/sync-options: Prune=false
     # Let OpenShift/DevSpaces own extra metadata (SCC, PSA labels, etc.)
     argocd.argoproj.io/compare-options: IgnoreExtraneous
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: openshift-logging
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+    argocd.argoproj.io/sync-options: Prune=false
+    # Let OpenShift/Logging own extra metadata (SCC, PSA labels, etc.)
+    argocd.argoproj.io/compare-options: IgnoreExtraneous

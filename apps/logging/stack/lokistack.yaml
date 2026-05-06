@@ -1,0 +1,24 @@
+apiVersion: loki.grafana.com/v1
+kind: LokiStack
+metadata:
+  name: logging-loki
+  namespace: openshift-logging
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  managementState: Managed
+  size: 1x.pico
+  limits:
+    global:
+      retention:
+        days: 2
+  storage:
+    schemas:
+      - version: v13
+        effectiveDate: "2026-01-01"
+    secret:
+      name: logging-loki-s3
+      type: s3
+  storageClassName: gp3-csi
+  tenants:
+    mode: openshift-logging
