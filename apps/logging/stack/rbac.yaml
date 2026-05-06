@@ -6,6 +6,9 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
 rules:
+  - apiGroups: ["batch"]
+    resources: ["jobs"]
+    verbs: ["*"]
   - apiGroups: ["loki.grafana.com"]
     resources: ["lokistacks"]
     verbs: ["*"]
