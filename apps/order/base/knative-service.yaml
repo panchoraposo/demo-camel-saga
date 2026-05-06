@@ -9,7 +9,7 @@ spec:
       annotations:
         autoscaling.knative.dev/minScale: "1"
         autoscaling.knative.dev/maxScale: "10"
-        ticketblaster.redhat.demo/order-image-build: "e8d17e4"
+        ticketblaster.redhat.demo/order-image-build: "8cd0afb"
       labels:
         app: order
         app.openshift.io/runtime: camel
