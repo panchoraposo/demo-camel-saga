@@ -13,7 +13,7 @@ spec:
   networkPolicy:
     enabled: false
   tenants:
-    mode: openshift
+    mode: static
     authentication:
       - tenantName: demo
         tenantId: demo
