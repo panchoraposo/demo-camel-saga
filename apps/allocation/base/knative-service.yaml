@@ -10,7 +10,7 @@ spec:
         # Kafka consumer must not scale-to-zero.
         autoscaling.knative.dev/minScale: "1"
         autoscaling.knative.dev/maxScale: "10"
-        ticketblaster.redhat.demo/allocation-image-build: "7c0898e"
+        ticketblaster.redhat.demo/allocation-image-build: "c42c76f"
     spec:
       containers:
         - name: allocation
