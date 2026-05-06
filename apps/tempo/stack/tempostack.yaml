@@ -47,7 +47,7 @@ spec:
         route:
           termination: edge
       rbac:
-        enabled: true
+        enabled: false
     distributor:
       component:
         replicas: 1
