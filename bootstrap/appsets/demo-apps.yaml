@@ -21,6 +21,9 @@ spec:
           - name: frontend
             path: apps/frontend/overlays/dev
             namespace: frontend
+          - name: kaoto
+            path: apps/kaoto/overlays/dev
+            namespace: kaoto
   template:
     metadata:
       name: '{{name}}'
