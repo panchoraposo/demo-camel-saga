@@ -57,6 +57,23 @@ oc get route -n kafka-console
 
 The Order service is exposed through the Knative ingress; the hostname is the usual `order-order...` route host.
 
+## DevSpaces (IDE for Kaoto demo)
+
+This GitOps setup also installs **OpenShift Dev Spaces** (Eclipse Che) so you can open a browser IDE and use the Kaoto extension.
+
+- Get the Dev Spaces dashboard route:
+
+```bash
+oc get route -n openshift-devspaces
+```
+
+- Open the `devspaces` route host (dashboard URL), then create a workspace from the app repo:
+  - Repo: `https://github.com/panchoraposo/camel-quarkus-saga.git`
+  - Demo folder: `kaoto-postgres-demo/`
+
+- Install the Kaoto VS Code extension from Open VSX:
+  - `redhat.vscode-kaoto` (see `https://open-vsx.org/extension/redhat/vscode-kaoto`)
+
 ## Smoke tests (recommended)
 
 End-to-end validation should cover:
