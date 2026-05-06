@@ -1,5 +1,5 @@
 resources:
   - imagestream.yaml
   - buildconfig.yaml
-  # Knative Service (replaces Deployment/Service)
-  - knative-service.yaml
+  - deployment.yaml
+  - service.yaml
