@@ -4,6 +4,12 @@ metadata:
   name: dev
   namespace: observability
 spec:
+  env:
+    - name: TEMPO_TRACES_TOKEN
+      valueFrom:
+        secretKeyRef:
+          name: tempo-traces-writer-token
+          key: token
   config:
     receivers:
       otlp:
@@ -28,6 +34,7 @@ spec:
           insecure_skip_verify: true
         headers:
           X-Scope-OrgID: demo
+          Authorization: "Bearer ${env:TEMPO_TRACES_TOKEN}"
 
     service:
       pipelines:
