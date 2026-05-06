@@ -77,6 +77,43 @@ The SAGA choreography uses:
 
 Use the Kafka Console to inspect these topics and correlate by `orderId`/`sagaId`.
 
+## Observability (logs, traces, metrics)
+
+### Traces (Tempo)
+
+The backend services export traces via OTLP to the in-cluster OpenTelemetry Collector, which forwards to Tempo.
+
+- Get the Tempo (Jaeger Query) Route:
+
+```bash
+oc get route -n observability | egrep -i 'jaeger|tempo'
+```
+
+### Metrics (Prometheus)
+
+Each backend service exposes Prometheus metrics at `/q/metrics`. This repo installs:
+
+- a `*-metrics` `Service` that selects the Knative Service pods
+- a `ServiceMonitor` that scrapes `/q/metrics`
+
+Verify the resources exist:
+
+```bash
+oc get service,servicemonitor -n order | egrep -i 'metrics|order'
+oc get service,servicemonitor -n allocation | egrep -i 'metrics|allocation'
+oc get service,servicemonitor -n payment | egrep -i 'metrics|payment'
+```
+
+### PromQL examples
+
+```promql
+# Orders created by status (counter)
+sum by (status) (increase(ticketblaster_saga_orders_total[5m]))
+
+# Kafka events consumed per topic/eventType
+sum by (topic, eventType) (rate(ticketblaster_kafka_events_consumed_total[5m]))
+```
+
 ## Troubleshooting
 
 - **Order timeouts / readiness failures**: check if the Knative revision is restarting (ExitCode 137 / OOM). The `apps/order/base/knative-service.yaml` resources are tuned to keep it stable.
