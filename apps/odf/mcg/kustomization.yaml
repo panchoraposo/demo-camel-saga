@@ -1,6 +1,6 @@
 resources:
   - rolebinding.yaml
   - noobaa.yaml
-  - backingstore.yaml
-  - bucketclass.yaml
+  # Keep the NooBaa system minimal; we rely on the operator-managed defaults
+  # (noobaa-default-backing-store + noobaa-default-bucket-class).
 

@@ -9,5 +9,5 @@ spec:
   generateBucketName: tempo-traces
   storageClassName: openshift-storage.noobaa.io
   additionalConfig:
-    bucketclass: tempo-bucket-class
+    bucketclass: noobaa-default-bucket-class
 
