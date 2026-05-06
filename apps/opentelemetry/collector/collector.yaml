@@ -24,7 +24,8 @@ spec:
       otlp:
         endpoint: tempo-simplest-gateway.observability.svc.cluster.local:8090
         tls:
-          insecure: true
+          insecure: false
+          insecure_skip_verify: true
         headers:
           X-Scope-OrgID: demo
 
