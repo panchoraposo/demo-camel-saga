@@ -77,8 +77,14 @@ spec:
               }
 
               echo "Publishing Avro schemas..."
-              create_or_update OrderEvent AVRO /contracts/order-event.avsc
-              set_meta OrderEvent "Ticketblaster OrderEvent" "Avro envelope used at runtime for all saga Kafka topics (order-events, seat-events, payment-events, compensation-events). The saga step is identified by the eventType field."
+              create_or_update order-events-value AVRO /contracts/order-event.avsc
+              set_meta order-events-value "Order events value schema" "Runtime Avro schema for Kafka topic order-events (value)."
+              create_or_update seat-events-value AVRO /contracts/order-event.avsc
+              set_meta seat-events-value "Seat events value schema" "Runtime Avro schema for Kafka topic seat-events (value)."
+              create_or_update payment-events-value AVRO /contracts/order-event.avsc
+              set_meta payment-events-value "Payment events value schema" "Runtime Avro schema for Kafka topic payment-events (value)."
+              create_or_update compensation-events-value AVRO /contracts/order-event.avsc
+              set_meta compensation-events-value "Compensation events value schema" "Runtime Avro schema for Kafka topic compensation-events (value)."
       volumes:
         - name: schemas
           configMap:
