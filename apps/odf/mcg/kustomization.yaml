@@ -1,0 +1,6 @@
+resources:
+  - rolebinding.yaml
+  - noobaa.yaml
+  - backingstore.yaml
+  - bucketclass.yaml
+

@@ -1,20 +1,23 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: odf-operator
+  name: odf-mcg
   namespace: openshift-gitops
   annotations:
-    argocd.argoproj.io/sync-wave: "0"
+    argocd.argoproj.io/sync-wave: "10"
 spec:
   project: default
   source:
     repoURL: 'https://github.com/panchoraposo/camel-quarkus-saga-gitops'
     targetRevision: HEAD
-    path: operators/odf
+    path: apps/odf/mcg
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: openshift-storage
   syncPolicy:
     automated:
+      prune: true
       selfHeal: true
-      prune: false
+    syncOptions:
+      - SkipDryRunOnMissingResource=true
+
