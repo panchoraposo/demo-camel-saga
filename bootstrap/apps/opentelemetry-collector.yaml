@@ -8,7 +8,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/panchoraposo/camel-quarkus-saga-gitops'
+    repoURL: 'https://github.com/panchoraposo/demo-camel-saga.git'
     targetRevision: HEAD
     path: apps/opentelemetry/collector
   destination:
