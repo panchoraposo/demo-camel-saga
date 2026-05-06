@@ -65,18 +65,6 @@ spec:
 
               echo "Publishing Avro schemas..."
               create_or_update OrderEvent AVRO /contracts/order-event.avsc
-              create_or_update ticketblaster-event-types JSON /contracts/event-types.schema.json
-              create_or_update ticketblaster-asyncapi ASYNCAPI /contracts/ticketblaster-asyncapi.yaml text/yaml
-
-              echo "Fetching OpenAPI documents..."
-              curl -fsS "http://order.order.svc.cluster.local/openapi?format=json" > /tmp/order-openapi.json
-              curl -fsS "http://allocation.allocation.svc.cluster.local/openapi?format=json" > /tmp/allocation-openapi.json
-              curl -fsS "http://payment.payment.svc.cluster.local/openapi?format=json" > /tmp/payment-openapi.json
-
-              echo "Publishing OpenAPI artifacts..."
-              create_or_update order-openapi OPENAPI /tmp/order-openapi.json
-              create_or_update allocation-openapi OPENAPI /tmp/allocation-openapi.json
-              create_or_update payment-openapi OPENAPI /tmp/payment-openapi.json
       volumes:
         - name: schemas
           configMap:
