@@ -66,6 +66,27 @@ End-to-end validation should cover:
 - **Seat conflict**: two users choose the same seat → second order `FAILED` + budget refunded
 - **Payment failure**: `forceFailPayment=true` → order `FAILED` + budget refunded + seat released
 
+## Load test (verify compensations)
+
+After everything is `Synced` / `Healthy`, you can run a simple load test from your workstation that:
+
+- creates **many parallel orders** on a single seat (conflict scenario)
+- forces **payment failures** and verifies **seat release + budget refund**
+
+The script lives in the app repository at `camel-quarkus-saga/scripts/load-test-compensations.sh`.
+
+Prereqs:
+
+- logged into the cluster with `oc` (so the script can auto-discover Knative/Route URLs)
+- `curl` + `jq`
+
+Run:
+
+```bash
+chmod +x scripts/load-test-compensations.sh
+./scripts/load-test-compensations.sh
+```
+
 ## Kafka topics
 
 The SAGA choreography uses:
