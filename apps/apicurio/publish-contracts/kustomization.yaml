@@ -1,0 +1,3 @@
+resources:
+  - avro-schema-configmap.yaml
+  - publish-job.yaml

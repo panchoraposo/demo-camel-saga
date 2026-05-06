@@ -27,3 +27,6 @@ resources:
 
   # Wave 50+: demo microservices (generated)
   - appsets/demo-apps.yaml
+
+  # Wave 60+: publish contracts to Apicurio
+  - apps/apicurio-contracts.yaml

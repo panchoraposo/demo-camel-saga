@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: apicurio-contracts
+  namespace: openshift-gitops
+  annotations:
+    argocd.argoproj.io/sync-wave: "60"
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/panchoraposo/camel-quarkus-saga-gitops'
+    targetRevision: HEAD
+    path: apps/apicurio/publish-contracts
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: apicurio-registry
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - SkipDryRunOnMissingResource=true

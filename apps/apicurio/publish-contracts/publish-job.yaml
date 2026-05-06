@@ -1,0 +1,73 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: publish-demo-contracts
+  namespace: apicurio-registry
+  annotations:
+    argocd.argoproj.io/hook: Sync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation,HookSucceeded
+spec:
+  backoffLimit: 3
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: publisher
+          image: quay.io/curl/curl:latest
+          env:
+            - name: REGISTRY_BASE_URL
+              value: http://apicurio-service.apicurio-registry.svc.cluster.local:8080/apis/registry/v2
+            - name: GROUP_ID
+              value: ticketblaster
+          volumeMounts:
+            - name: schemas
+              mountPath: /contracts
+              readOnly: true
+          command:
+            - /bin/sh
+            - -ec
+            - |
+              echo "Waiting for Apicurio Registry..."
+              until curl -fsS "$REGISTRY_BASE_URL/system/info" >/dev/null; do sleep 2; done
+
+              create_or_update() {
+                ARTIFACT_ID="$1"
+                TYPE="$2"
+                FILE="$3"
+
+                # Try create (idempotent when absent)
+                if curl -fsS -o /dev/null -X POST \
+                  -H "X-Registry-ArtifactType: $TYPE" \
+                  -H "Content-Type: application/json" \
+                  "$REGISTRY_BASE_URL/groups/$GROUP_ID/artifacts?artifactId=$ARTIFACT_ID" \
+                  --data-binary "@$FILE"
+                then
+                  echo "Created $ARTIFACT_ID ($TYPE)"
+                  return 0
+                fi
+
+                # If it already exists, update it
+                curl -fsS -o /dev/null -X PUT \
+                  -H "X-Registry-ArtifactType: $TYPE" \
+                  -H "Content-Type: application/json" \
+                  "$REGISTRY_BASE_URL/groups/$GROUP_ID/artifacts/$ARTIFACT_ID" \
+                  --data-binary "@$FILE"
+                echo "Updated $ARTIFACT_ID ($TYPE)"
+              }
+
+              echo "Publishing Avro schemas..."
+              create_or_update order-event AVRO /contracts/order-event.avsc
+
+              echo "Fetching OpenAPI documents..."
+              curl -fsS "http://order.order.svc.cluster.local/openapi" > /tmp/order-openapi.json
+              curl -fsS "http://allocation.allocation.svc.cluster.local/openapi" > /tmp/allocation-openapi.json
+              curl -fsS "http://payment.payment.svc.cluster.local/openapi" > /tmp/payment-openapi.json
+
+              echo "Publishing OpenAPI artifacts..."
+              create_or_update order-openapi OPENAPI /tmp/order-openapi.json
+              create_or_update allocation-openapi OPENAPI /tmp/allocation-openapi.json
+              create_or_update payment-openapi OPENAPI /tmp/payment-openapi.json
+      volumes:
+        - name: schemas
+          configMap:
+            name: ticketblaster-avro-schemas
