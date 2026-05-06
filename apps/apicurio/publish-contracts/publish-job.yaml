@@ -63,8 +63,24 @@ spec:
                 echo "Updated $ARTIFACT_ID ($TYPE)"
               }
 
+              set_meta() {
+                ARTIFACT_ID="$1"
+                NAME="$2"
+                DESCRIPTION="$3"
+
+                cat > /tmp/meta.json <<EOF
+              {"name":"$NAME","description":"$DESCRIPTION"}
+EOF
+
+                curl -fsS -o /dev/null -X PUT \
+                  -H "Content-Type: application/json" \
+                  "$REGISTRY_BASE_URL/groups/$GROUP_ID/artifacts/$ARTIFACT_ID/meta" \
+                  --data-binary @/tmp/meta.json
+              }
+
               echo "Publishing Avro schemas..."
               create_or_update OrderEvent AVRO /contracts/order-event.avsc
+              set_meta OrderEvent "Ticketblaster OrderEvent" "Avro envelope used at runtime for all saga Kafka topics (order-events, seat-events, payment-events, compensation-events). The saga step is identified by the eventType field."
       volumes:
         - name: schemas
           configMap:
