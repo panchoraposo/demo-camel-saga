@@ -1,0 +1,4 @@
+resources:
+  - rbac.yaml
+  - registry.yaml
+  - route.yaml

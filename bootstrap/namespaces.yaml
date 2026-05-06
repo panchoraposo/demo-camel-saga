@@ -49,6 +49,14 @@ metadata:
 apiVersion: v1
 kind: Namespace
 metadata:
+  name: apicurio-registry
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+    argocd.argoproj.io/sync-options: Prune=false
+---
+apiVersion: v1
+kind: Namespace
+metadata:
   name: openshift-opentelemetry-operator
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
