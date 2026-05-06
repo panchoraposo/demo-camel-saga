@@ -2,5 +2,6 @@ resources:
   - ../../base
   #- configmap.yaml
   - rolebinding.yaml
+  - servicemonitor-rbac.yaml
   #- route.yaml
   #- virtual-service.yaml

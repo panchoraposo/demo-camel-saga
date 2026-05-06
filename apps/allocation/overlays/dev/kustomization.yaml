@@ -2,4 +2,5 @@ resources:
   - ../../base
   #- configmap.yaml
   - rolebinding.yaml
+  - servicemonitor-rbac.yaml
   # Allocation is exposed via Knative Route (avoid host conflicts).
