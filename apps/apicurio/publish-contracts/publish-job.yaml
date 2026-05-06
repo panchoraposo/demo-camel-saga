@@ -68,9 +68,7 @@ spec:
                 NAME="$2"
                 DESCRIPTION="$3"
 
-                cat > /tmp/meta.json <<EOF
-              {"name":"$NAME","description":"$DESCRIPTION"}
-EOF
+                printf '{"name":"%s","description":"%s"}' "$NAME" "$DESCRIPTION" > /tmp/meta.json
 
                 curl -fsS -o /dev/null -X PUT \
                   -H "Content-Type: application/json" \
