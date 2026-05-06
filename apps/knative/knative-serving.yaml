@@ -3,3 +3,7 @@ kind: KnativeServing
 metadata:
   name: knative-serving
   namespace: knative-serving
+spec:
+  config:
+    deployment:
+      registriesSkippingTagResolving: "image-registry.openshift-image-registry.svc:5000"
