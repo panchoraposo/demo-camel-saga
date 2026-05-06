@@ -7,8 +7,6 @@ metadata:
     argocd.argoproj.io/sync-wave: "2"
 spec:
   managementState: Managed
-  # Keep this cluster-friendly (single-node / low resources).
-  size: 1x.pico
   replicationFactor: 1
   tenants:
     mode: openshift
@@ -33,6 +31,13 @@ spec:
       enabled: true
       component:
         replicas: 1
+        resources:
+          requests:
+            cpu: 25m
+            memory: 128Mi
+          limits:
+            cpu: 100m
+            memory: 256Mi
       ingress:
         type: route
         route:
@@ -42,15 +47,50 @@ spec:
     distributor:
       component:
         replicas: 1
+        resources:
+          requests:
+            cpu: 25m
+            memory: 128Mi
+          limits:
+            cpu: 150m
+            memory: 384Mi
     ingester:
       replicas: 1
+      resources:
+        requests:
+          cpu: 50m
+          memory: 512Mi
+        limits:
+          cpu: 200m
+          memory: 1Gi
     querier:
       replicas: 1
+      resources:
+        requests:
+          cpu: 25m
+          memory: 192Mi
+        limits:
+          cpu: 150m
+          memory: 512Mi
     queryFrontend:
       component:
         replicas: 1
+        resources:
+          requests:
+            cpu: 25m
+            memory: 192Mi
+          limits:
+            cpu: 150m
+            memory: 512Mi
     compactor:
       replicas: 1
+      resources:
+        requests:
+          cpu: 25m
+          memory: 128Mi
+        limits:
+          cpu: 150m
+          memory: 384Mi
     # Traces are surfaced via the OpenShift Console plugin; with gateway + multitenancy
     # enabled, we avoid exposing Jaeger Query directly.
   observability:
