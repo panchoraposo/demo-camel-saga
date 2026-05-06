@@ -38,10 +38,7 @@ spec:
     queryFrontend:
       jaegerQuery:
         enabled: true
-        ingress:
-          type: route
-          route:
-            termination: edge
+        # When the gateway is enabled, Jaeger UI must be accessed via the gateway ingress.
   observability:
     metrics:
       createServiceMonitors: true
