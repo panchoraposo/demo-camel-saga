@@ -24,6 +24,9 @@ spec:
           - name: kaoto
             path: apps/kaoto/overlays/dev
             namespace: kaoto
+          - name: kaoto-postgres
+            path: apps/kaoto-postgres/overlays/dev
+            namespace: kaoto
   template:
     metadata:
       name: '{{name}}'

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kaoto-postgres
+  namespace: kaoto
+spec:
+  selector:
+    app: kaoto-postgres
+  ports:
+    - port: 5432
+      targetPort: 5432
+
