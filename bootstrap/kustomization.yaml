@@ -15,6 +15,7 @@ resources:
   - apps/tempo-operator.yaml
   - apps/service-registry-operator.yaml
   - apps/odf-operator.yaml
+  - apps/devspaces-operator.yaml
 
   # Wave 10+: platform instances
   - apps/demo-cluster.yaml
@@ -26,6 +27,7 @@ resources:
   - apps/tempo-stack.yaml
   - apps/opentelemetry-collector.yaml
   - apps/apicurio-registry.yaml
+  - apps/devspaces.yaml
 
   # Wave 50+: demo microservices (generated)
   - appsets/demo-apps.yaml

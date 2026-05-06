@@ -1,0 +1,18 @@
+apiVersion: org.eclipse.che/v2
+kind: CheCluster
+metadata:
+  name: devspaces
+  namespace: openshift-devspaces
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  components:
+    pluginRegistry:
+      # Use the public Open VSX marketplace so users can install:
+      # https://open-vsx.org/extension/redhat/vscode-kaoto
+      openVSXURL: https://open-vsx.org
+  networking:
+    # Provide default routes for the dashboard and gateway.
+    # (Operator will create Routes in openshift-devspaces.)
+    hostname: ""
+

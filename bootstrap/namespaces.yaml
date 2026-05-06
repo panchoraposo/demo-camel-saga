@@ -128,3 +128,13 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
     argocd.argoproj.io/sync-options: Prune=false
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: openshift-devspaces
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+    argocd.argoproj.io/sync-options: Prune=false
+    # Let OpenShift/DevSpaces own extra metadata (SCC, PSA labels, etc.)
+    argocd.argoproj.io/compare-options: IgnoreExtraneous
