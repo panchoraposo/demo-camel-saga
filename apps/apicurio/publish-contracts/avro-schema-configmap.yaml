@@ -35,3 +35,129 @@ data:
         { "name": "forceFailPayment", "type": ["null", "boolean"], "default": null }
       ]
     }
+  event-types.schema.json: |
+    {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "Ticketblaster Saga Event Types",
+      "type": "string",
+      "enum": [
+        "OrderCreated",
+        "SeatReserved",
+        "SeatReserveFailed",
+        "PaymentCompleted",
+        "PaymentFailed",
+        "CompensateSeat",
+        "SeatReleased"
+      ]
+    }
+  ticketblaster-asyncapi.yaml: |
+    asyncapi: "2.6.0"
+    info:
+      title: Ticketblaster Saga Events
+      version: "1.0.0"
+      description: >
+        Kafka event choreography for the Ticketblaster saga demo. Payloads use the Avro envelope `OrderEvent`
+        and are distinguished by the `eventType` field.
+    defaultContentType: application/json
+    channels:
+      order-events:
+        publish:
+          summary: Order service emits OrderCreated.
+          message:
+            name: OrderCreated
+            payload:
+              $ref: "#/components/schemas/OrderEvent"
+      seat-events:
+        publish:
+          summary: Allocation service emits seat reservation outcomes and releases.
+          message:
+            oneOf:
+              - name: SeatReserved
+                payload:
+                  $ref: "#/components/schemas/OrderEvent"
+              - name: SeatReserveFailed
+                payload:
+                  $ref: "#/components/schemas/OrderEvent"
+              - name: SeatReleased
+                payload:
+                  $ref: "#/components/schemas/OrderEvent"
+      payment-events:
+        publish:
+          summary: Payment service emits payment outcomes.
+          message:
+            oneOf:
+              - name: PaymentCompleted
+                payload:
+                  $ref: "#/components/schemas/OrderEvent"
+              - name: PaymentFailed
+                payload:
+                  $ref: "#/components/schemas/OrderEvent"
+      compensation-events:
+        subscribe:
+          summary: Order service emits compensation requests (CompensateSeat).
+          message:
+            name: CompensateSeat
+            payload:
+              $ref: "#/components/schemas/OrderEvent"
+    components:
+      schemas:
+        OrderEvent:
+          type: object
+          required: [eventType, orderId]
+          properties:
+            eventType:
+              $ref: "#/components/schemas/EventType"
+            sagaId:
+              type: string
+              nullable: true
+            orderId:
+              type: string
+            userId:
+              type: integer
+              nullable: true
+            seatId:
+              type: string
+              nullable: true
+            price:
+              type: number
+              nullable: true
+            date:
+              type: integer
+              nullable: true
+            orderStatus:
+              type: string
+              nullable: true
+            orderMessage:
+              type: string
+              nullable: true
+            seatStatus:
+              type: string
+              nullable: true
+            seatMessage:
+              type: string
+              nullable: true
+            paymentId:
+              type: string
+              nullable: true
+            paymentStatus:
+              type: string
+              nullable: true
+            paymentMessage:
+              type: string
+              nullable: true
+            budgetReserved:
+              type: boolean
+              nullable: true
+            forceFailPayment:
+              type: boolean
+              nullable: true
+        EventType:
+          type: string
+          enum:
+            - OrderCreated
+            - SeatReserved
+            - SeatReserveFailed
+            - PaymentCompleted
+            - PaymentFailed
+            - CompensateSeat
+            - SeatReleased

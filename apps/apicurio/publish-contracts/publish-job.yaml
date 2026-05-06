@@ -34,12 +34,13 @@ spec:
                 ARTIFACT_ID="$1"
                 TYPE="$2"
                 FILE="$3"
+                CONTENT_TYPE="${4:-application/json}"
 
                 # Create with explicit artifactId. If it already exists, update it.
                 CODE="$(curl -sS -o /tmp/publish-resp.json -w '%{http_code}' -X POST \
                   -H "X-Registry-ArtifactType: $TYPE" \
                   -H "X-Registry-ArtifactId: $ARTIFACT_ID" \
-                  -H "Content-Type: application/json" \
+                  -H "Content-Type: $CONTENT_TYPE" \
                   "$REGISTRY_BASE_URL/groups/$GROUP_ID/artifacts" \
                   --data-binary "@$FILE" || true)"
 
@@ -56,7 +57,7 @@ spec:
 
                 curl -fsS -o /dev/null -X PUT \
                   -H "X-Registry-ArtifactType: $TYPE" \
-                  -H "Content-Type: application/json" \
+                  -H "Content-Type: $CONTENT_TYPE" \
                   "$REGISTRY_BASE_URL/groups/$GROUP_ID/artifacts/$ARTIFACT_ID" \
                   --data-binary "@$FILE"
                 echo "Updated $ARTIFACT_ID ($TYPE)"
@@ -64,6 +65,8 @@ spec:
 
               echo "Publishing Avro schemas..."
               create_or_update OrderEvent AVRO /contracts/order-event.avsc
+              create_or_update ticketblaster-event-types JSON /contracts/event-types.schema.json
+              create_or_update ticketblaster-asyncapi ASYNCAPI /contracts/ticketblaster-asyncapi.yaml text/yaml
 
               echo "Fetching OpenAPI documents..."
               curl -fsS "http://order.order.svc.cluster.local/openapi?format=json" > /tmp/order-openapi.json
