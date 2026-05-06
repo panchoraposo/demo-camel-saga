@@ -12,6 +12,21 @@ spec:
     global:
       retention:
         days: 2
+  template:
+    compactor:
+      replicas: 1
+    distributor:
+      replicas: 1
+    gateway:
+      replicas: 1
+    indexGateway:
+      replicas: 1
+    ingester:
+      replicas: 1
+    querier:
+      replicas: 1
+    queryFrontend:
+      replicas: 1
   storage:
     schemas:
       - version: v13
