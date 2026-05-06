@@ -3,6 +3,8 @@ kind: ConfigMap
 metadata:
   name: ticketblaster-avro-schemas
   namespace: apicurio-registry
+  annotations:
+    ticketblaster.redhat.demo/contracts-revision: "2f35dfb"
 data:
   order-event.avsc: |
     {
