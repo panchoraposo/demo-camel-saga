@@ -4,12 +4,14 @@ metadata:
   name: dev
   namespace: observability
 spec:
-  env:
-    - name: TEMPO_TRACES_TOKEN
-      valueFrom:
-        secretKeyRef:
-          name: dev-collector-sa-token
-          key: token
+  volumes:
+    - name: tempo-gateway-mtls
+      secret:
+        secretName: tempo-simplest-gateway-mtls
+  volumeMounts:
+    - name: tempo-gateway-mtls
+      mountPath: /etc/tempo-gateway-mtls
+      readOnly: true
   config:
     receivers:
       otlp:
@@ -28,13 +30,14 @@ spec:
     exporters:
       debug: {}
       otlp:
-        endpoint: tempo-simplest-gateway.observability.svc.cluster.local:8090
+        endpoint: tempo-simplest-distributor.observability.svc.cluster.local:4317
         tls:
           insecure: false
           insecure_skip_verify: true
+          cert_file: /etc/tempo-gateway-mtls/tls.crt
+          key_file: /etc/tempo-gateway-mtls/tls.key
         headers:
           X-Scope-OrgID: demo
-          Authorization: "Bearer ${env:TEMPO_TRACES_TOKEN}"
 
     service:
       pipelines:
