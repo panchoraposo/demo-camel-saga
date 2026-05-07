@@ -38,7 +38,7 @@ spec:
             - name: QUARKUS_OTEL_TRACES_SAMPLER_ARG
               value: "1.0"
             - name: QUARKUS_OIDC_AUTH_SERVER_URL
-              value: http://keycloak-service.keycloak.svc.cluster.local:8080/realms/ticketblaster
+              value: https://keycloak-ingress-keycloak.apps.cluster-mj9vq.mj9vq.sandbox469.opentlc.com/realms/ticketblaster
             - name: QUARKUS_OIDC_TOKEN_PRINCIPAL_CLAIM
               value: preferred_username
             - name: QUARKUS_OIDC_TLS_VERIFICATION
